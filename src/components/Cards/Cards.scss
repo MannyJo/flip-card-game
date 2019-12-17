@@ -5,17 +5,4 @@
     flex-wrap: wrap;
     justify-content: center;
 
-    .card {
-        width: 100px;
-        height: 100px;
-        margin: 10px;
-        background-color: skyblue;
-        border-radius: 5px;
-        border: 2px solid black;
-        justify-content: center;
-
-        &.visible {
-            background-color: pink;
-        }
-    }
 }

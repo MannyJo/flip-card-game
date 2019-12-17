@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Card from './Card/Card';
 import './Cards.scss';
 
 const initCards = [
@@ -19,27 +20,16 @@ const initCards = [
 const Cards = () => {
     const [cards, setCards] = useState(initCards);
 
-    const clickCard = card => e => {
-        if (card.isVisible) {
-            e.target.className = 'card';
-        } else {
-            e.target.className += ' visible';
-        }
-        card.isVisible = !card.isVisible;
-        setCards([ ...cards ]);
-    }
-
     return (
         <div className="cardContainer">
             {
-                cards.map((card, i) =>
-                    <div
-                        key={i}
-                        onClick={clickCard(card)}
-                        className="card"
-                    >
-                        {card.isVisible === false ? '' : card.value}
-                    </div>
+                cards.map((card, i) => 
+                    <Card 
+                        key={i} 
+                        card={card} 
+                        cards={cards} 
+                        setCards={setCards} 
+                    />
                 )
             }
         </div>

@@ -1,0 +1,20 @@
+.cardFrame {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background-color: skyblue;
+    border-radius: 5px;
+    border: 2px solid black;
+    position: relative;
+
+    &.visible {
+        background-color: pink;
+    }
+
+    .cardContent {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
