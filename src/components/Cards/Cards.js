@@ -20,6 +20,16 @@ const initCards = [
 const Cards = () => {
     const [cards, setCards] = useState(initCards);
 
+    const clickCard = card => e => {
+        if (card.isVisible) {
+            e.target.className = 'cardFrame';
+        } else {
+            e.target.className += ' visible';
+        }
+        card.isVisible = !card.isVisible;
+        setCards([ ...cards ]);
+    }
+
     return (
         <div className="cardContainer">
             {
@@ -27,8 +37,7 @@ const Cards = () => {
                     <Card 
                         key={i} 
                         card={card} 
-                        cards={cards} 
-                        setCards={setCards} 
+                        clickCard={clickCard}
                     />
                 )
             }
