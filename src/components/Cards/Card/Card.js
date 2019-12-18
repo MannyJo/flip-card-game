@@ -2,11 +2,11 @@ import React from 'react';
 import './Card.scss';
 
 const Card = ({ card, clickCard }) => {
-
     return (
-        <div onClick={clickCard(card)} className="cardFrame">
-            <div className="cardContent">
-                {card.isVisible === false ? '' : card.value}
+        <div className="cardFrame">
+            <div className="cardContent" onClick={clickCard(card)}>
+                <div className="cardFront">Front</div>
+                <div className="cardBack">{card.value}</div>
             </div>
         </div>
     )

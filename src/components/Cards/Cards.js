@@ -21,10 +21,12 @@ const Cards = () => {
     const [cards, setCards] = useState(initCards);
 
     const clickCard = card => e => {
-        if (card.isVisible) {
-            e.target.className = 'cardFrame';
-        } else {
-            e.target.className += ' visible';
+        if(e.target.parentElement.className.includes('cardContent')) {
+            if (card.isVisible) {
+                e.target.parentElement.className = e.target.parentElement.className.replace(' visible', '');
+            } else {
+                e.target.parentElement.className += ' visible';
+            }
         }
         card.isVisible = !card.isVisible;
         setCards([ ...cards ]);
