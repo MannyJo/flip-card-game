@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './Card/Card';
 import './Cards.scss';
 
@@ -17,9 +17,31 @@ const initCards = [
     { id: 12, value: '6', isVisible: false, isLocked: false }
 ];
 
-const Cards = () => {
+const Cards = ({ isStarted, setDelay, setTime }) => {
     const [cards, setCards] = useState(initCards);
     const [deck, setDeck] = useState([]);
+
+    useEffect(() => {
+        const index = cards.findIndex(card => card.isLocked === false);
+        if(index < 0) {
+            const newCards = cards.map(card => ({ ...card, isVisible: false, isLocked: false }));
+
+            alert('You have completed this puzzle!!');
+
+            setCards(newCards);
+            setDeck([]);
+            setDelay(0);
+            setTime(15);
+        }
+        // eslint-disable-next-line
+    }, [cards]);
+
+    useEffect(() => {
+        const newCards = cards.map(card => ({ ...card, isVisible: false, isLocked: false }));
+        setCards(newCards);
+        setDeck([]);
+        // eslint-disable-next-line
+    }, [isStarted]);
 
     const checkDeck = card => {
         let isAvailable = false;
@@ -34,36 +56,31 @@ const Cards = () => {
         return isAvailable;
     }
 
-    const checkLogic = card => {
+    const checkLogic = (card) => {
         let newCards = [];
         if(deck.length === 1) {
-            if(deck[0].value === card.value) {
-                newCards = cards.map(c => {
-                    if(c.id === card.id || deck[0].id === c.id) {
+            newCards = cards.map(c => {
+                if(c.id === card.id || deck[0].id === c.id) {
+                    if(deck[0].value === card.value) {
                         return { ...c, isLocked: true }
-                    }
-                    return c;
-                });
-            } else {
-                newCards = cards.map(c => {
-                    if(c.id === card.id || deck[0].id === c.id) {
+                    } else {
                         return { ...c, isVisible: false }
                     }
-                    return c;
-                });
-            }
+                }
+                return c;
+            });
             setCards(newCards);
             setDeck([]);
         }
     }
 
     const clickCard = card => e => {
-        if(checkDeck(card)) {
-            if(e.target.parentElement.className.includes('cardContent')) {
-                card.isVisible = !card.isVisible;
-
-                setTimeout(() => checkLogic(card), 1000);
-
+        if(isStarted) {
+            if(checkDeck(card)) {
+                if(e.target.parentElement.className.includes('cardContent')) {
+                    card.isVisible = !card.isVisible;
+                    setTimeout(() => checkLogic(card), 500);
+                }
             }
         }
     }
