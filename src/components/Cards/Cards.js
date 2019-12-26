@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card/Card';
+import Popup from '../Popup/Popup';
 import './Cards.scss';
 
 const initCards = [
@@ -17,16 +18,19 @@ const initCards = [
     { id: 12, value: '6', isVisible: false, isLocked: false }
 ];
 
-const Cards = ({ isStarted, setDelay, setTime }) => {
+const Cards = ({ isStarted, setDelay, setTime, time }) => {
     const [cards, setCards] = useState(initCards);
     const [deck, setDeck] = useState([]);
+    const [isFinished, setFinished] = useState(false);
+    const [remainTime, setRemainTime] = useState(15);
 
     useEffect(() => {
         const index = cards.findIndex(card => card.isLocked === false);
         if(index < 0) {
             const newCards = cards.map(card => ({ ...card, isVisible: false, isLocked: false }));
 
-            alert('You have completed this puzzle!!');
+            setRemainTime(15-time);
+            setFinished(true);
 
             setCards(newCards);
             setDeck([]);
@@ -96,6 +100,11 @@ const Cards = ({ isStarted, setDelay, setTime }) => {
                     />
                 )
             }
+            <Popup 
+                isFinished={isFinished}
+                setFinished={setFinished}
+                time={remainTime}
+            />
         </div>
     )
 }

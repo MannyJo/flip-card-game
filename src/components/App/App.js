@@ -36,16 +36,17 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="appContainer">
       <h1 className="title">Flip Card Game</h1>
       <div className="timerContainer">
         <h2>Time Remaining : {time}</h2>
         <button className="timerButton" onClick={clickButton}>{buttonName}</button>
       </div>
-      <Cards 
+      <Cards
         isStarted={delay === RESET_DELAY ? false : true} 
         setDelay={setDelay}
         setTime={setTime}
+        time={time}
       />
     </div>
   );
